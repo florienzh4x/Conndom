@@ -1,2 +1,1 @@
-# Conndom
-### Anonymous Random Connection Helper
+# Conndom - Anonymous Random Connection Helper
