@@ -13,18 +13,26 @@ function proxyCreate() {
 	then
 		cat /tmp/proxylists.txt >> /tmp/proxylists.txt.tmp
 	fi
+	IFS=$'\n'
+	for GTPROX in $(curl -s "http://www.gatherproxy.com/" | grep PROXY_IP)
+	do
+		IP_PROX=$(echo $GTPROX | grep -Po 'PROXY_IP":"\K.*?(?=")')
+		PORT_PROXT=$(echo $GTPROX | grep -Po 'PROXY_PORT":"\K.*?(?=")')
+		PORT_PROX=$(echo $((0x${PORT_PROXT})))
+		echo "${IP_PROX}:${PORT_PROX}" >> /tmp/proxylists.txt.tmp
+	done
 	for PROXY in $(cat /tmp/proxylists.txt.tmp)
 	do
 		PROXCON=$(curl --proxy $PROXY --connect-timeout 2 --max-time 2 -sl "https://raw.githubusercontent.com/panophan/Conndom/master/testconnection" 2> /dev/null)
 		if [[ $PROXCON =~ "CONNECTION_CHECK_1998" ]]
 		then
 			echo "[OK!] ${PROXY}"
-			echo "${PROXY}" >> /tmp/proxylists.txtlive
+			echo "${PROXY}" >> /tmp/proxylists.txt.live
 		else
 			echo "[BAD] ${PROXY}"
 		fi
 	done
-	cat /tmp/proxylists.txtlive > /tmp/proxylists.txt
+	cat /tmp/proxylists.txt.live > /tmp/proxylists.txt
 	rm /tmp/proxylists.txt.*
 }
 
