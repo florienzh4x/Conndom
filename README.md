@@ -9,10 +9,25 @@ Kegunaan:
 
 Untuk limit penggunaan proxy menggunakan batasan waktu 1 jam. Kedepannya mungkin akan dibuat supaya bisa di-configure limitnya.
 
-Instalasi:
+### Instalasi:
 ```
 git clone https://github.com/panophan/Conndom.git
 cd Conndom
 chmod +x setup.sh
 sudo ./setup.sh
 ```
+
+### Penggunaan:
+- conndom --help
+- conndom --proxy-create
+Untuk mengenerate proxy (live) baru
+- conndom --proxy-lists
+Untuk melihat proxy yang telah digenerate
+- conndom --proxy-rand
+Untuk mengeluarkan output 1 proxy, proxy tersebut mengambil dari data pada proxy list. Command ini digunakan sebagai helper tool untuk seperti curl dan lain-lain.
+```curl --proxy $(conndom --proxy-rand) http://targetweb.com/```
+- conndom --ua-rand
+Untuk mengeluarkan output 1 random user agent. Command ini digunakan sebagai helper tool untuk seperti curl dan lain-lain.
+
+### Changelog
+2.0 : Added Multi-thread process
