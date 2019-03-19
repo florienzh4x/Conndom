@@ -2,9 +2,21 @@
 #########################################
 # Name     : CONNDOM                    #
 # Function : cURL Helper                #
-# Version  : 1.0                        #
+# Version  : 2.0                        #
 # Coded    : Schopath [www.zerobyte.id] #
 #########################################
+
+function proxyTest() {
+	PROXY="$1"
+	PROXCON=$(curl --proxy $PROXY --connect-timeout 2 --max-time 2 -sl "https://raw.githubusercontent.com/panophan/Conndom/master/testconnection" 2> /dev/null)
+	if [[ $PROXCON =~ "CONNECTION_CHECK_1998" ]]
+	then
+		echo "[OK] ${PROXY}"
+		echo "${PROXY}" >> /tmp/proxylists.txt.live
+	else
+		echo "[BAD] ${PROXY}"
+	fi
+}
 
 function proxyCreate() {
 	wget -q https://free-proxy-list.net/ -O /tmp/proxylists.txt.download
@@ -21,18 +33,17 @@ function proxyCreate() {
 		PORT_PROX=$(echo $((0x${PORT_PROXT})))
 		echo "${IP_PROX}:${PORT_PROX}" >> /tmp/proxylists.txt.tmp
 	done
-	for PROXY in $(cat /tmp/proxylists.txt.tmp)
-	do
-		PROXCON=$(curl --proxy $PROXY --connect-timeout 2 --max-time 2 -sl "https://raw.githubusercontent.com/panophan/Conndom/master/testconnection" 2> /dev/null)
-		if [[ $PROXCON =~ "CONNECTION_CHECK_1998" ]]
-		then
-			echo "[OK!] ${PROXY}"
-			echo "${PROXY}" >> /tmp/proxylists.txt.live
-		else
-			echo "[BAD] ${PROXY}"
-		fi
-	done
+	LIMITATOR=20
+	(
+		for PROXY in $(cat /tmp/proxylists.txt.tmp);
+		do 
+			((cthread=cthread%LIMITATOR)); ((cthread++==0)) && wait
+			proxyTest "$PROXY" & 
+		done
+		wait
+	)
 	cat /tmp/proxylists.txt.live > /tmp/proxylists.txt
+	echo "DONE: You got $(cat /tmp/proxylists.txt | wc -l) good proxies."
 	rm /tmp/proxylists.txt.*
 }
 
