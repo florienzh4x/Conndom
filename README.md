@@ -18,16 +18,17 @@ sudo ./setup.sh
 ```
 
 ### Penggunaan:
-- conndom --help
-- conndom --proxy-create
+- `conndom --help`
+Untuk melihat cara penggunaan tool
+- `conndom --proxy-create`
 Untuk mengenerate proxy (live) baru
-- conndom --proxy-lists
+- `conndom --proxy-lists`
 Untuk melihat proxy yang telah digenerate
-- conndom --proxy-rand
+- `conndom --proxy-rand`
 Untuk mengeluarkan output 1 proxy, proxy tersebut mengambil dari data pada proxy list. Command ini digunakan sebagai helper tool untuk seperti curl dan lain-lain.
 ```curl --proxy $(conndom --proxy-rand) http://targetweb.com/```
-- conndom --ua-rand
+- `conndom --ua-rand`
 Untuk mengeluarkan output 1 random user agent. Command ini digunakan sebagai helper tool untuk seperti curl dan lain-lain.
 
 ### Changelog
-2.0 : Added Multi-thread process
+2.0 : Multi-thread process when creating proxy added
