@@ -26,8 +26,7 @@ Untuk mengenerate proxy (live) baru
 Untuk melihat proxy yang telah digenerate
 - `conndom --proxy-rand`
 Untuk mengeluarkan output 1 proxy, proxy tersebut mengambil dari data pada proxy list. Command ini digunakan sebagai helper tool untuk seperti curl dan lain-lain.
-
-Example: ```curl --proxy $(conndom --proxy-rand) http://targetweb.com/```
+-- Example: ```curl --proxy $(conndom --proxy-rand) http://targetweb.com/```
 - `conndom --ua-rand`
 Untuk mengeluarkan output 1 random user agent. Command ini digunakan sebagai helper tool untuk seperti curl dan lain-lain.
 
