@@ -31,4 +31,4 @@ Untuk mengeluarkan output 1 proxy, proxy tersebut mengambil dari data pada proxy
 Untuk mengeluarkan output 1 random user agent. Command ini digunakan sebagai helper tool untuk seperti curl dan lain-lain.
 
 ### Changelog
-2.0 : Multi-thread process when creating proxy added
+2.0 : Add multi-thread process when generate proxy
