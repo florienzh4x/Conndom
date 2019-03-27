@@ -1,8 +1,7 @@
 #!/bin/bash
 #########################################
 # Name     : CONNDOM                    #
-# Function : cURL Helper                #
-# Version  : 2.0                        #
+# Version  : 2.1                        #
 # Coded    : Schopath [www.zerobyte.id] #
 #########################################
 
@@ -42,7 +41,7 @@ function proxyCreate() {
 		done
 		wait
 	)
-	cat /tmp/proxylists.txt.live > /tmp/proxylists.txt
+	cat /tmp/proxylists.txt.live | sort -nr | uniq > /tmp/proxylists.txt
 	echo "DONE: You got $(cat /tmp/proxylists.txt | wc -l) good proxies."
 	rm /tmp/proxylists.txt.*
 }
